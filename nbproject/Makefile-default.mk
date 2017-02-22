@@ -30,12 +30,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=a
 DEBUGGABLE_SUFFIX=a
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/BSP.X.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/PicModulBsae.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=a
 DEBUGGABLE_SUFFIX=a
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/BSP.X.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/PicModulBsae.${OUTPUT_SUFFIX}
 endif
 
 ifeq ($(COMPARE_BUILD), true)
@@ -81,7 +81,7 @@ FIXDEPS=fixDeps
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/BSP.X.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/PicModulBsae.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=30F5011
 MP_LINKER_FILE_OPTION=,--script=p30F5011.gld
@@ -204,16 +204,16 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: archive
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/BSP.X.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/PicModulBsae.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/BSP.X.${OUTPUT_SUFFIX} 
-	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/BSP.X.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
+	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/PicModulBsae.${OUTPUT_SUFFIX} 
+	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/PicModulBsae.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/BSP.X.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/PicModulBsae.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/BSP.X.${OUTPUT_SUFFIX} 
-	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/BSP.X.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
+	@${RM} dist/${CND_CONF}/${IMAGE_TYPE}/PicModulBsae.${OUTPUT_SUFFIX} 
+	${MP_AR} $(MP_EXTRA_AR_PRE)  -omf=elf -r dist/${CND_CONF}/${IMAGE_TYPE}/PicModulBsae.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      
 	
 endif
 

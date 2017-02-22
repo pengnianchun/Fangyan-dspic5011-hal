@@ -3,16 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/HFMZKJ/MZKJProgram/SHFY/DBCM/BSP.X/src/ADC.c</file>
-            <file>file:/E:/HFMZKJ/MZKJProgram/SHFY/DBCM/BSP.X/src/CAN.c</file>
-            <file>file:/E:/HFMZKJ/MZKJProgram/SHFY/DBCM/BSP.X/src/EEROM_asm.s</file>
-            <file>file:/E:/HFMZKJ/MZKJProgram/SHFY/DBCM/BSP.X/src/EEROM.c</file>
-            <file>file:/E:/HFMZKJ/MZKJProgram/SHFY/DBCM/BSP.X/src/INT.c</file>
-            <file>file:/E:/HFMZKJ/MZKJProgram/SHFY/DBCM/BSP.X/src/POUT.c</file>
-            <file>file:/E:/HFMZKJ/MZKJProgram/SHFY/DBCM/BSP.X/src/SPI.c</file>
-            <file>file:/E:/HFMZKJ/MZKJProgram/SHFY/DBCM/BSP.h</file>
-            <file>file:/E:/HFMZKJ/MZKJProgram/SHFY/DBCM/BSP.X/nbproject/Makefile-default.mk</file>
-            <file>file:/E:/HFMZKJ/MZKJProgram/SHFY/DBCM/BSP.X/src/BSP.h</file>
+            <file>file:/C:/Users/pnc/Desktop/Model/src/system.h</file>
+            <file>file:/C:/Users/pnc/Desktop/Model/lib/BSP.h</file>
+            <file>file:/C:/Users/pnc/Desktop/Model/src/system.c</file>
+            <file>file:/C:/Users/pnc/Desktop/Model/src/main.c</file>
+            <file>file:/C:/Users/pnc/Desktop/Model/src/cfg.h</file>
+            <file>file:/C:/Users/pnc/Desktop/黄海锦州公交/Huanghai/lib/BSP.h</file>
+            <file>file:/C:/Users/pnc/Desktop/PicModulBsae/src/BSP.h</file>
         </group>
     </open-files>
 </project-private>

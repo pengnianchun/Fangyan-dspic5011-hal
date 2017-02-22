@@ -10,9 +10,9 @@ CND_CONF=default
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/BSP.X.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=BSP.X.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=BSP.X/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/PicModulBsae.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=PicModulBsae.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=PicModulBsae/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/BSP.X/lib
+makeDirectory ${TMPDIR}/PicModulBsae/lib
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}" 0644
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/BSP.X.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/PicModulBsae.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/BSP.X.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/PicModulBsae.tar *
 checkReturnCode
 
 # Cleanup
