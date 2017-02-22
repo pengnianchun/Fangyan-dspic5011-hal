@@ -98,9 +98,8 @@ void POUT_Write(void) {
                 pf[0] = 0x02; //故障保护
             } else {
                 PO1 = 1; //打开输出
-                if (pcur[0] < OPENLOAD_VALUE) pf[1] = 0x01;
-                else pf[1] = 0x00;
-                pf[0] = 0x00;
+                if (pcur[0] < OPENLOAD_VALUE) pf[0] = 0x01;//正常
+                else pf[0] = 0x00;//开路
             }
             if (pcur[0] > PROTECT_THRESHOLD) {
                 pcnt[0]++;
