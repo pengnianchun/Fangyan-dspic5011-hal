@@ -92,14 +92,14 @@ unsigned int pcur[15];
 void POUT_Write(void) {
     if (gPout.BITS.O1 == 1) {
         if (pf[0] != 0x02) {
-            pcur[0] = ADC_Read(1);
+            pcur[0] = ADC_Read(5);
             if (pcnt[0] >= PROTECT_MAX_CNT) {
                 PO1 = 0; //关闭输出 
                 pf[0] = 0x02; //故障保护
             } else {
                 PO1 = 1; //打开输出
-                if (pcur[0] < OPENLOAD_VALUE) pf[0] = 0x01;//正常
-                else pf[0] = 0x00;//开路
+                if (pcur[0] < OPENLOAD_VALUE) pf[0] = 0x01;//开路
+                else pf[0] = 0x00;//正常
             }
             if (pcur[0] > PROTECT_THRESHOLD) {
                 pcnt[0]++;
@@ -115,7 +115,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O2 == 1) {
         if (pf[1] != 0x02) {
-            pcur[1] = ADC_Read(2);
+            pcur[1] = ADC_Read(9);
             if (pcnt[1] >= PROTECT_MAX_CNT) {
                 PO2 = 0; //关闭输出 
                 pf[1] = 0x02; //故障保护
@@ -138,7 +138,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O3 == 1) {
         if (pf[2] != 0x02) {
-            pcur[2] = ADC_Read(3);
+            pcur[2] = ADC_Read(4);
             if (pcnt[2] >= PROTECT_MAX_CNT) {
                 PO3 = 0; //关闭输出 
                 pf[2] = 0x02; //故障保护
@@ -162,7 +162,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O4 == 1) {
         if (pf[3] != 0x02) {
-            pcur[3] = ADC_Read(4);
+            pcur[3] = ADC_Read(10);
             if (pcnt[3] >= PROTECT_MAX_CNT) {
                 PO4 = 0; //关闭输出 
                 pf[3] = 0x02; //故障保护
@@ -185,7 +185,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O5 == 1) {
         if (pf[4] != 0x02) {
-            pcur[4] = ADC_Read(5);
+            pcur[4] = ADC_Read(3);
             if (pcnt[4] >= PROTECT_MAX_CNT) {
                 PO5 = 0; //关闭输出 
                 pf[4] = 0x02; //故障保护
@@ -209,7 +209,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O6 == 1) {
         if (pf[5] != 0x02) {
-            pcur[5] = ADC_Read(6);
+            pcur[5] = ADC_Read(11);
             if (pcnt[5] >= PROTECT_MAX_CNT) {
                 PO6 = 0; //关闭输出 
                 pf[5] = 0x02; //故障保护
@@ -234,7 +234,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O7 == 1) {
         if (pf[6] != 0x02) {
-            pcur[6] = ADC_Read(7);
+            pcur[6] = ADC_Read(2);
             if (pcnt[6] >= PROTECT_MAX_CNT) {
                 PO7 = 0; //关闭输出 
                 pf[6] = 0x02; //故障保护
@@ -258,7 +258,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O8 == 1) {
         if (pf[7] != 0x02) {
-            pcur[7] = ADC_Read(8);
+            pcur[7] = ADC_Read(12);
             if (pcnt[7] >= PROTECT_MAX_CNT) {
                 PO8 = 0; //关闭输出 
                 pf[7] = 0x02; //故障保护
@@ -282,7 +282,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O9 == 1) {
         if (pf[8] != 0x02) {
-            pcur[8] = ADC_Read(9);
+            pcur[8] = ADC_Read(1);
             if (pcnt[8] >= PROTECT_MAX_CNT) {
                 PO9 = 0; //关闭输出 
                 pf[8] = 0x02; //故障保护
@@ -306,7 +306,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O10 == 1) {
         if (pf[9] != 0x02) {
-            pcur[9] = ADC_Read(10);
+            pcur[9] = ADC_Read(13);
             if (pcnt[9] >= PROTECT_MAX_CNT) {
                 PO10 = 0; //关闭输出 
                 pf[9] = 0x02; //故障保护
@@ -330,7 +330,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O11 == 1) {
         if (pf[10] != 0x02) {
-            pcur[10] = ADC_Read(11);
+            pcur[10] = ADC_Read(6);
             if (pcnt[10] >= PROTECT_MAX_CNT) {
                 PO11 = 0; //关闭输出 
                 pf[10] = 0x02; //故障保护
@@ -353,7 +353,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O12 == 1) {
         if (pf[11] != 0x02) {
-            pcur[11] = ADC_Read(12);
+            pcur[11] = ADC_Read(14);
             if (pcnt[11] >= PROTECT_MAX_CNT) {
                 PO12 = 0; //关闭输出 
                 pf[11] = 0x02; //故障保护
@@ -376,7 +376,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O13 == 1) {
         if (pf[12] != 0x02) {
-            pcur[12] = ADC_Read(13);
+            pcur[12] = ADC_Read(7);
             if (pcnt[12] >= PROTECT_MAX_CNT) {
                 PO13 = 0; //关闭输出 
                 pf[12] = 0x02; //故障保护
@@ -400,7 +400,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O14 == 1) {
         if (pf[13] != 0x02) {
-            pcur[13] = ADC_Read(14);
+            pcur[13] = ADC_Read(15);
             if (pcnt[13] >= PROTECT_MAX_CNT) {
                 PO14 = 0; //关闭输出 
                 pf[13] = 0x02; //故障保护
@@ -424,7 +424,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O15 == 1) {
         if (pf[14] != 0x02) {
-            pcur[14] = ADC_Read(15);
+            pcur[14] = ADC_Read(8);
             if (pcnt[14] >= PROTECT_MAX_CNT) {
                 PO15 = 0; //关闭输出 
                 pf[14] = 0x02; //故障保护
