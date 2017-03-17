@@ -93,15 +93,15 @@ void POUT_Write(void) {
     if (gPout.BITS.O1 == 1) {
         if (pf[0] != 0x02) {
             pcur[0] = ADC_Read(5);
-            if (pcnt[0] >= PROTECT_MAX_CNT) {
+            if (pcnt[0] >= (PROTECT_MAX_CNT * 2)) {//雨刮高档保护10间为10秒，别的为5秒
                 PO1 = 0; //关闭输出 
                 pf[0] = 0x02; //故障保护
             } else {
                 PO1 = 1; //打开输出
-                if (pcur[0] < OPENLOAD_VALUE) pf[0] = 0x01;//开路
-                else pf[0] = 0x00;//正常
+                if (pcur[0] < OPENLOAD_VALUE) pf[0] = 0x01; //开路
+                else pf[0] = 0x00; //正常
             }
-            if (pcur[0] > PROTECT_THRESHOLD) {
+            if (pcur[0] > (PROTECT_THRESHOLD * 2)) {//雨刮高档保护门槛为24A，别的为12A
                 pcnt[0]++;
             } else {
                 if (pcnt[0] > 0) pcnt[0]--;
