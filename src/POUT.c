@@ -35,7 +35,16 @@
 #define POD_DR  _TRISC1
 #define POD     _LATC1
 
-POUT gPout;
+POUT gPout, pout;
+
+#define OPENLOAD_VALUE     100
+#define PROTECT_THRESHOLD  1000
+#define PROTECT_MAX_CNT    100
+
+unsigned char pf[15] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+static unsigned char pcnt[15] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+unsigned int pcur[15];
+const unsigned char ad_ch[] = {5, 9, 4, 10, 3, 11, 2, 12, 1, 13, 6, 14, 7, 15, 8};
 
 extern unsigned int ADC_Read(unsigned char chs);
 
@@ -77,23 +86,59 @@ void POUT_Init(void) {
 
 }
 
-void POUT_Protect(void) {
-
+static void POUT_Protect(void) {
+    unsigned char i;
+    unsigned int dump;
+    dump = gPout.WORDS;
+    for (i = 0; i < 16; i++) {
+        if ((dump & 0x01) == 1) {//一个AD值大约等于12mA
+            if (pf[i] != 0x02) {
+                pcur[i] = ADC_Read(ad_ch[i]);
+                if (pcnt[i] >= (PROTECT_MAX_CNT)) {
+                    pout.WORDS = (pout.WORDS & ~(0x01 << i));//关闭输出                      
+                    pf[i] = 0x02; //故障保护
+                } else {
+                    pout.WORDS = (pout.WORDS | (0x01 << i));//打开输出
+                    if (pcur[i] < OPENLOAD_VALUE) pf[i] = 0x01; //开路
+                    else pf[i] = 0x00; //正常
+                }
+                if (pcur[i] > (PROTECT_THRESHOLD)) {
+                    pcnt[i]++;
+                } else {
+                    if (pcnt[i] > 0) pcnt[i]--;
+                }
+            }
+        } else {
+            pout.WORDS = (pout.WORDS & ~(0x01 << i));
+            pcnt[i] = 0;
+            pf[i] = 0;
+        }
+        dump = dump >> 1;
+    }
 }
 
-#define OPENLOAD_VALUE     100
-#define PROTECT_THRESHOLD  1000
-#define PROTECT_MAX_CNT    100
-
-unsigned char pf[15] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-static unsigned char pcnt[15] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-unsigned int pcur[15];
-
 void POUT_Write(void) {
-    if (gPout.BITS.O1 == 1) {
+    POUT_Protect();
+    PO1 = pout.BITS.O1;
+    PO2 = pout.BITS.O2;
+    PO3 = pout.BITS.O3;
+    PO4 = pout.BITS.O4;
+    PO5 = pout.BITS.O5;
+    PO6 = pout.BITS.O6;
+    PO7 = pout.BITS.O7;
+    PO8 = pout.BITS.O8;
+    PO9 = pout.BITS.O9;
+    PO10 = pout.BITS.O10;
+    PO11 = pout.BITS.O11;
+    PO12 = pout.BITS.O12;
+    PO13 = pout.BITS.O13;
+    PO14 = pout.BITS.O14;
+    PO15 = pout.BITS.O15;     
+#if 0   
+    if (gPout.BITS.O1 == 1) {//一个AD值大约等于12mA
         if (pf[0] != 0x02) {
-            pcur[0] = ADC_Read(5);
-            if (pcnt[0] >= (PROTECT_MAX_CNT * 2)) {//雨刮高档保护10间为10秒，别的为5秒
+            pcur[0] = ADC_Read(ad_ch[0]);
+            if (pcnt[0] >= (PROTECT_MAX_CNT)) {
                 PO1 = 0; //关闭输出 
                 pf[0] = 0x02; //故障保护
             } else {
@@ -101,7 +146,7 @@ void POUT_Write(void) {
                 if (pcur[0] < OPENLOAD_VALUE) pf[0] = 0x01; //开路
                 else pf[0] = 0x00; //正常
             }
-            if (pcur[0] > (PROTECT_THRESHOLD * 2)) {//雨刮高档保护门槛为24A，别的为12A
+            if (pcur[0] > (PROTECT_THRESHOLD)) {
                 pcnt[0]++;
             } else {
                 if (pcnt[0] > 0) pcnt[0]--;
@@ -115,7 +160,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O2 == 1) {
         if (pf[1] != 0x02) {
-            pcur[1] = ADC_Read(9);
+            pcur[1] = ADC_Read(ad_ch[1]);
             if (pcnt[1] >= PROTECT_MAX_CNT) {
                 PO2 = 0; //关闭输出 
                 pf[1] = 0x02; //故障保护
@@ -138,7 +183,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O3 == 1) {
         if (pf[2] != 0x02) {
-            pcur[2] = ADC_Read(4);
+            pcur[2] = ADC_Read(ad_ch[2]);
             if (pcnt[2] >= PROTECT_MAX_CNT) {
                 PO3 = 0; //关闭输出 
                 pf[2] = 0x02; //故障保护
@@ -162,7 +207,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O4 == 1) {
         if (pf[3] != 0x02) {
-            pcur[3] = ADC_Read(10);
+            pcur[3] = ADC_Read(ad_ch[3]);
             if (pcnt[3] >= PROTECT_MAX_CNT) {
                 PO4 = 0; //关闭输出 
                 pf[3] = 0x02; //故障保护
@@ -185,7 +230,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O5 == 1) {
         if (pf[4] != 0x02) {
-            pcur[4] = ADC_Read(3);
+            pcur[4] = ADC_Read(ad_ch[4]);
             if (pcnt[4] >= PROTECT_MAX_CNT) {
                 PO5 = 0; //关闭输出 
                 pf[4] = 0x02; //故障保护
@@ -209,7 +254,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O6 == 1) {
         if (pf[5] != 0x02) {
-            pcur[5] = ADC_Read(11);
+            pcur[5] = ADC_Read(ad_ch[5]);
             if (pcnt[5] >= PROTECT_MAX_CNT) {
                 PO6 = 0; //关闭输出 
                 pf[5] = 0x02; //故障保护
@@ -234,7 +279,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O7 == 1) {
         if (pf[6] != 0x02) {
-            pcur[6] = ADC_Read(2);
+            pcur[6] = ADC_Read(ad_ch[6]);
             if (pcnt[6] >= PROTECT_MAX_CNT) {
                 PO7 = 0; //关闭输出 
                 pf[6] = 0x02; //故障保护
@@ -258,7 +303,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O8 == 1) {
         if (pf[7] != 0x02) {
-            pcur[7] = ADC_Read(12);
+            pcur[7] = ADC_Read(ad_ch[7]);
             if (pcnt[7] >= PROTECT_MAX_CNT) {
                 PO8 = 0; //关闭输出 
                 pf[7] = 0x02; //故障保护
@@ -282,7 +327,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O9 == 1) {
         if (pf[8] != 0x02) {
-            pcur[8] = ADC_Read(1);
+            pcur[8] = ADC_Read(ad_ch[8]);
             if (pcnt[8] >= PROTECT_MAX_CNT) {
                 PO9 = 0; //关闭输出 
                 pf[8] = 0x02; //故障保护
@@ -306,7 +351,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O10 == 1) {
         if (pf[9] != 0x02) {
-            pcur[9] = ADC_Read(13);
+            pcur[9] = ADC_Read(ad_ch[9]);
             if (pcnt[9] >= PROTECT_MAX_CNT) {
                 PO10 = 0; //关闭输出 
                 pf[9] = 0x02; //故障保护
@@ -330,7 +375,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O11 == 1) {
         if (pf[10] != 0x02) {
-            pcur[10] = ADC_Read(6);
+            pcur[10] = ADC_Read(ad_ch[10]);
             if (pcnt[10] >= PROTECT_MAX_CNT) {
                 PO11 = 0; //关闭输出 
                 pf[10] = 0x02; //故障保护
@@ -353,7 +398,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O12 == 1) {
         if (pf[11] != 0x02) {
-            pcur[11] = ADC_Read(14);
+            pcur[11] = ADC_Read(ad_ch[11]);
             if (pcnt[11] >= PROTECT_MAX_CNT) {
                 PO12 = 0; //关闭输出 
                 pf[11] = 0x02; //故障保护
@@ -376,7 +421,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O13 == 1) {
         if (pf[12] != 0x02) {
-            pcur[12] = ADC_Read(7);
+            pcur[12] = ADC_Read(ad_ch[12]);
             if (pcnt[12] >= PROTECT_MAX_CNT) {
                 PO13 = 0; //关闭输出 
                 pf[12] = 0x02; //故障保护
@@ -400,7 +445,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O14 == 1) {
         if (pf[13] != 0x02) {
-            pcur[13] = ADC_Read(15);
+            pcur[13] = ADC_Read(ad_ch[13]);
             if (pcnt[13] >= PROTECT_MAX_CNT) {
                 PO14 = 0; //关闭输出 
                 pf[13] = 0x02; //故障保护
@@ -424,7 +469,7 @@ void POUT_Write(void) {
 
     if (gPout.BITS.O15 == 1) {
         if (pf[14] != 0x02) {
-            pcur[14] = ADC_Read(8);
+            pcur[14] = ADC_Read(ad_ch[14]);
             if (pcnt[14] >= PROTECT_MAX_CNT) {
                 PO15 = 0; //关闭输出 
                 pf[14] = 0x02; //故障保护
@@ -444,6 +489,7 @@ void POUT_Write(void) {
         pcnt[14] = 0;
         pf[14] = 0;
     }
-
+#endif
     POD = gPout.BITS.OD;
 }
+
