@@ -39,7 +39,7 @@ POUT gPout, pout;
 
 #define OPENLOAD_VALUE     100
 #define PROTECT_THRESHOLD  1000
-#define PROTECT_MAX_CNT    100
+#define PROTECT_MAX_CNT    50
 
 unsigned char pf[15] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static unsigned char pcnt[15] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
